@@ -52,9 +52,21 @@ import java.util.TimeZone;
  */
 class TimestampSerializer {
 
+    /**
+     * second
+     */
     private static final long MILLIS_PER_SECOND = 1000;
+    /**
+     * minute
+     */
     private static final long MILLIS_PER_MINUTE = MILLIS_PER_SECOND * 60;
+    /**
+     * hour
+     */
     private static final long MILLIS_PER_HOUR = MILLIS_PER_MINUTE * 60;
+    /**
+     * day
+     */
     private static final long MILLIS_PER_DAY = MILLIS_PER_HOUR * 24;
     private static final char TIME_SEPARATOR = 'T';
     private static final char TIME_ZONE_SEPARATOR = 'Z';
@@ -71,7 +83,8 @@ class TimestampSerializer {
         }
         builder.append(cachedDateLocal.getCachedDateIso());
 
-        builder.append(TIME_SEPARATOR);
+        // builder.append(TIME_SEPARATOR);
+        builder.append(" ");
 
         // hours
         long remainder = epochTimestamp % MILLIS_PER_DAY;
@@ -92,7 +105,7 @@ class TimestampSerializer {
         remainder %= MILLIS_PER_SECOND;
         serializeWithLeadingZero(builder, remainder, 3);
 
-        builder.append(TIME_ZONE_SEPARATOR);
+        // builder.append(TIME_ZONE_SEPARATOR);
     }
 
     private void serializeWithLeadingZero(StringBuilder builder, long value, int minLength) {
@@ -110,8 +123,9 @@ class TimestampSerializer {
         private final long endOfCachedDate;
 
         private CachedDate(long epochTimestamp) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ROOT);
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+            // dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            dateFormat.setTimeZone(TimeZone.getDefault());
             cachedDateIso = dateFormat.format(new Date(epochTimestamp));
             startOfCachedDate = atStartOfDay(epochTimestamp);
             endOfCachedDate = atEndOfDay(epochTimestamp);

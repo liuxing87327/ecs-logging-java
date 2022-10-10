@@ -40,6 +40,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 
 public class EcsEncoder extends EncoderBase<ILoggingEvent> {
 
@@ -56,6 +57,8 @@ public class EcsEncoder extends EncoderBase<ILoggingEvent> {
     private boolean includeOrigin;
     private final List<AdditionalField> additionalFields = new ArrayList<AdditionalField>();
     private OutputStream os;
+
+    private long timeRawOffset = TimeZone.getDefault().getRawOffset();
 
     @Override
     public byte[] headerBytes() {
@@ -103,16 +106,16 @@ public class EcsEncoder extends EncoderBase<ILoggingEvent> {
     @Override
     public byte[] encode(ILoggingEvent event) {
         StringBuilder builder = new StringBuilder(256);
-        EcsJsonSerializer.serializeObjectStart(builder, event.getTimeStamp());
+        EcsJsonSerializer.serializeObjectStart(builder, event.getTimeStamp() + timeRawOffset);
         EcsJsonSerializer.serializeLogLevel(builder, event.getLevel().toString());
         EcsJsonSerializer.serializeFormattedMessage(builder, event.getFormattedMessage());
-        EcsJsonSerializer.serializeEcsVersion(builder);
+        // EcsJsonSerializer.serializeEcsVersion(builder);
         serializeMarkers(event, builder);
         EcsJsonSerializer.serializeServiceName(builder, serviceName);
         EcsJsonSerializer.serializeServiceVersion(builder, serviceVersion);
         EcsJsonSerializer.serializeServiceEnvironment(builder, serviceEnvironment);
         EcsJsonSerializer.serializeServiceNodeName(builder, serviceNodeName);
-        EcsJsonSerializer.serializeEventDataset(builder, eventDataset);
+        // EcsJsonSerializer.serializeEventDataset(builder, eventDataset);
         EcsJsonSerializer.serializeThreadName(builder, event.getThreadName());
         EcsJsonSerializer.serializeLoggerName(builder, event.getLoggerName());
         EcsJsonSerializer.serializeAdditionalFields(builder, additionalFields);

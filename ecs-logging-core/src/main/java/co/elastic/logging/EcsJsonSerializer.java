@@ -44,13 +44,13 @@ public class EcsJsonSerializer {
 
     public static void serializeObjectStart(StringBuilder builder, long timeMillis) {
         builder.append('{');
-        builder.append("\"@timestamp\":\"");
+        builder.append("\"timestamp\":\"");
         TIMESTAMP_SERIALIZER.serializeEpochTimestampAsIsoDateTime(builder, timeMillis);
         builder.append("\",");
     }
 
     public static void serializeEcsVersion(StringBuilder builder) {
-        builder.append("\"ecs.version\": \"1.2.0\",");
+        builder.append("\"ecs.version\": \"1.5.1\",");
     }
 
     public static void serializeObjectEnd(StringBuilder builder) {

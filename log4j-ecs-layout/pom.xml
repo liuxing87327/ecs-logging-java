@@ -3,7 +3,7 @@
     <parent>
         <artifactId>ecs-logging-java-parent</artifactId>
         <groupId>co.elastic.logging</groupId>
-        <version>1.5.0</version>
+        <version>1.5.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -44,12 +44,12 @@
             <version>1.2.17</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ecs-logging-core</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>${project.groupId}</groupId>-->
+        <!--    <artifactId>ecs-logging-core</artifactId>-->
+        <!--    <version>${project.version}</version>-->
+        <!--    <type>test-jar</type>-->
+        <!--    <scope>test</scope>-->
+        <!--</dependency>-->
     </dependencies>
 </project>
